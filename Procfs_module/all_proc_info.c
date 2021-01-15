@@ -34,12 +34,10 @@ struct task_struct *init_proc_task = &init_task;
 
 /*****************seq_operations******************/
 static void *all_proc_info_start(struct seq_file *seq, loff_t *pos)
-{	
+{
 	loff_t off=0;
-	
-	dump_stack();
-	pr_alert("in seq_start\n");
-	
+	pr_alert("in seq_start\n")
+		
 	for_each_process(task)
 	{
 		if(*pos == off++)
@@ -70,11 +68,9 @@ static int all_proc_info_show(struct seq_file *file, void *v)
 
 static void *all_proc_info_next(struct seq_file *seq, void *v, loff_t *pos)
 {	
-	dump_stack();
-
 	current_proc_task =((struct task_struct *)v);
 	next_proc_task = next_task(current_proc_task);
-	
+
 	++*pos;
 
 	if(next_proc_task != init_proc_task)     //since pds are maintained in circular list
